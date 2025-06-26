@@ -1,8 +1,7 @@
 use extendr_api::prelude::*;
 use std::process::{Command};
 
-/// Function to call the fqtk CLI command for demux.
-/// Exposes the demux functionality as a Rust function that can be called from R.
+/// Exposes the guide-counter functionality as a Rust function that can be called from R.
 /// @export
 #[extendr]
 fn guidecounter_count(
