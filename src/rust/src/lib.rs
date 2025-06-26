@@ -45,6 +45,6 @@ fn guidecounter_count(
 // This ensures exported functions are registered with R.
 // See corresponding C code in `entrypoint.c`.
 extendr_module! {
-    mod guidecounter.wrapper;
+    mod guidecounter_wrapper;
     fn guidecounter_count;
 }
