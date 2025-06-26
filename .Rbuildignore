@@ -1,4 +1,4 @@
-^counter\.Rproj$
+^guideCounterWrapper\.Rproj$
 ^\.Rproj\.user$
 ^src/\.cargo$
 ^src/rust/vendor$
