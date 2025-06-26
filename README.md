@@ -20,7 +20,7 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 }
 
 # Installation from GitHub in the same way as pepitope
-remotes::install_github("BrftM/guidecounter.wrapper")
+remotes::install_github("BrftM/guideCounterWrapper")
 ```
 ### Example Table (lib.tsv)
 
@@ -42,7 +42,7 @@ Once the `guidecounter_count` function is exposed to R, you can call it directly
 
 ```r
 # Load the package
-library(guidecounter.wrapper)
+library(guideCounterWrapper)
 
 # Define the input parameters
 input  <- c("C:/Users/.../input.fq.gz")
@@ -57,4 +57,4 @@ guidecounter_count(
   output = output
 )
 ```
-This README provides all the necessary instructions and examples for installing and using the `guidecounter.wrapper` package in R.
+This README provides all the necessary instructions and examples for installing and using the `guideCounterWrapper` package in R.
