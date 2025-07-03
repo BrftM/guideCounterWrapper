@@ -2,3 +2,6 @@
 src/rust/vendor
 src/Makevars
 src/Makevars.win
+
+# Source packages should not contain undeclared executable files.
+*.dll
