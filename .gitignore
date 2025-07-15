@@ -10,3 +10,16 @@ src/rcounter/vendor.tar.xz
 src/rcounter/vendor/*
 inst/AUTHORS
 *.gz
+\..Rcheck
+*.rds
+
+# Ignore Rcheck directory
+.Rcheck/
+
+# Ignore Git directory
+.git/
+
+# Ignore R-related files that should not be in a package tarball
+.Rhistory
+.RData
+.Rproj.user

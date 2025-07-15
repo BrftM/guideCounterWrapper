@@ -1,14 +1,16 @@
 Package: guideCounterWrapper
-Title: R package wrapper around the command-line tool 'guide-counter', developed by Fulcrum Genomics
+Title: R Package Wrapper Around the Command-Line Tool "Guide-Counter", Developed by Fulcrum Genomics
 Version: 0.0.0.9000
 Authors@R: 
     person("Moritz", "Broft", , "moritz.broft@gmail.com", role = c("aut", "cre"))
-Description: Provides an R wrapper around the command-line tool 'guide-counter',
+Author: Moritz Broft [aut, cre]
+Maintainer: Moritz Broft <moritz.broft@gmail.com>
+Description: Provides an R wrapper around the command-line tool guide-counter,
     developed by Fulcrum Genomics, for counting guide RNAs in sequencing reads based on
     a user-provided barcode library. This package enables integration of 'guide-counter'
     functionality into R workflows, facilitating processing and quantification of FASTQ files
-    for CRISPR screening experiments. If you use 'guide-counter' or this wrapper in your work,
-    please cite the original tool as: Fennell and Homer (2022) <https://doi.org/10.5281/zenodo.6375792>.
+    for CRISPR screening experiments. If you use guide-counter or this wrapper in your work,
+    please cite the original tool as: Fennell and Homer (2022) <doi:10.5281/zenodo.6375792>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -17,3 +19,4 @@ Config/rextendr/version: 0.4.1.9000
 SystemRequirements: Cargo (Rust's package manager), rustc
 Depends: 
     R (>= 4.2)
+

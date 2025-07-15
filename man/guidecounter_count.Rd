@@ -2,8 +2,7 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{guidecounter_count}
 \alias{guidecounter_count}
-\title{Call the \verb{guide-counter count} CLI from R.
-This function provides access to the \verb{guide-counter count} command via a Rust-backed function.}
+\title{Call the \verb{guide-counter count} CLI from R.}
 \usage{
 guidecounter_count(input, library, offset_min_fraction, output)
 }
@@ -20,6 +19,16 @@ guidecounter_count(input, library, offset_min_fraction, output)
 A character string message indicating success or an error.
 }
 \description{
-Call the \verb{guide-counter count} CLI from R.
-This function provides access to the \verb{guide-counter count} command via a Rust-backed function.
+This function provides access to the \verb{guide-counter count} command-line tool
+via a Rust-backed interface.
+}
+\examples{
+\dontrun{
+guidecounter_count(
+  input = c("reads_1.fastq", "reads_2.fastq"),
+  library = "my_library",
+  offset_min_fraction = 0.05,
+  output = tempfile(fileext = ".tsv")
+)
+}
 }

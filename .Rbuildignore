@@ -8,3 +8,16 @@
 ^.travis.yml$
 ^appveyor.yml$
 ^\.github$
+
+.gitignore
+.Rhistory
+.cargo-checksum.json
+.Rproj.user
+^\.rds
+
+^\.git$
+^\.Rcheck$
+^\.Rhistory$
+^\.Rproj\.user$
+src/vendor/*
+^src/rcounter/vendor$

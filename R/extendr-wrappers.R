@@ -11,7 +11,10 @@
 NULL
 
 #' Call the `guide-counter count` CLI from R.
-#' This function provides access to the `guide-counter count` command via a Rust-backed function.
+#'
+#' This function provides access to the `guide-counter count` command-line tool
+#' via a Rust-backed interface.
+#'
 #' @param input A character vector of input file paths.
 #' @param library A string specifying the library name or path to use.
 #' @param offset_min_fraction A numeric value specifying the minimum offset threshold (as a fraction).
@@ -20,7 +23,16 @@ NULL
 #' @return A character string message indicating success or an error.
 #'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' guidecounter_count(
+#'   input = c("reads_1.fastq", "reads_2.fastq"),
+#'   library = "my_library",
+#'   offset_min_fraction = 0.05,
+#'   output = tempfile(fileext = ".tsv")
+#' )
+#' }
 guidecounter_count <- function(input, library, offset_min_fraction, output) .Call(wrap__guidecounter_count, input, library, offset_min_fraction, output)
-
 
 # nolint end
