@@ -1,5 +1,5 @@
 Package: guideCounterWrapper
-Title: R package wrapper around the command-line tool 'guide-counter', developed by Fulcrum Genomics.
+Title: R package wrapper around the command-line tool 'guide-counter', developed by Fulcrum Genomics
 Version: 0.0.0.9000
 Authors@R: 
     person("Moritz", "Broft", , "moritz.broft@gmail.com", role = c("aut", "cre"))
@@ -9,7 +9,7 @@ Description: Provides an R wrapper around the command-line tool 'guide-counter',
     functionality into R workflows, facilitating processing and quantification of FASTQ files
     for CRISPR screening experiments. If you use 'guide-counter' or this wrapper in your work,
     please cite the original tool as: Fennell and Homer (2022) <https://doi.org/10.5281/zenodo.6375792>.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

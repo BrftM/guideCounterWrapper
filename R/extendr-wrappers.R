@@ -10,8 +10,15 @@
 #' @useDynLib guideCounterWrapper, .registration = TRUE
 NULL
 
-#' Function to call the fqtk CLI command for demux.
-#' Exposes the demux functionality as a Rust function that can be called from R.
+#' Call the `guide-counter count` CLI from R.
+#' This function provides access to the `guide-counter count` command via a Rust-backed function.
+#' @param input A character vector of input file paths.
+#' @param library A string specifying the library name or path to use.
+#' @param offset_min_fraction A numeric value specifying the minimum offset threshold (as a fraction).
+#' @param output A string specifying the path to the output file.
+#'
+#' @return A character string message indicating success or an error.
+#'
 #' @export
 guidecounter_count <- function(input, library, offset_min_fraction, output) .Call(wrap__guidecounter_count, input, library, offset_min_fraction, output)
 

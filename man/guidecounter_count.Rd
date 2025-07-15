@@ -2,12 +2,24 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{guidecounter_count}
 \alias{guidecounter_count}
-\title{Function to call the fqtk CLI command for demux.
-Exposes the demux functionality as a Rust function that can be called from R.}
+\title{Call the \verb{guide-counter count} CLI from R.
+This function provides access to the \verb{guide-counter count} command via a Rust-backed function.}
 \usage{
 guidecounter_count(input, library, offset_min_fraction, output)
 }
+\arguments{
+\item{input}{A character vector of input file paths.}
+
+\item{library}{A string specifying the library name or path to use.}
+
+\item{offset_min_fraction}{A numeric value specifying the minimum offset threshold (as a fraction).}
+
+\item{output}{A string specifying the path to the output file.}
+}
+\value{
+A character string message indicating success or an error.
+}
 \description{
-Function to call the fqtk CLI command for demux.
-Exposes the demux functionality as a Rust function that can be called from R.
+Call the \verb{guide-counter count} CLI from R.
+This function provides access to the \verb{guide-counter count} command via a Rust-backed function.
 }
