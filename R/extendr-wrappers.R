@@ -10,7 +10,7 @@
 #' @useDynLib guideCounterWrapper, .registration = TRUE
 NULL
 
-#' Call the `guide-counter count` CLI from R.
+#' Call the `guide-counter count` CLI from R
 #'
 #' This function provides access to the `guide-counter count` command-line tool
 #' via a Rust-backed interface.
