@@ -1,0 +1,15 @@
+[package]
+name = "rcounter"                    
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.65"
+publish = false
+
+[lib]
+name = "rcounter"                    
+crate-type = ["staticlib"]
+path = "src/lib.rs"                 
+
+[dependencies]
+extendr-api = "0.8.1"             
+guide-counter = "0.1.3"           

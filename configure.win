@@ -1,2 +1,14 @@
 #!/usr/bin/env sh
 "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" tools/config.R
+
+# Check cargo
+export PATH="$PATH:$HOME/.cargo/bin"
+if [ $(command -v cargo) ]; then
+  cargo --version
+  rustc --version || true
+else
+  echo "ERROR: 'cargo' not found in PATH. Install it from https://rust-lang.org."
+  exit 1
+fi
+
+exit 0

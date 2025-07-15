@@ -1,7 +1,7 @@
 TARGET = $(subst 64,x86_64,$(subst 32,i686,$(WIN)))-pc-windows-gnu
 
 TARGET_DIR = ./rcounter/target
-LIBDIR = $(TARGET_DIR)/$(TARGET)/@LIBDIR@
+LIBDIR = $(TARGET_DIR)/$(TARGET)/release
 STATLIB = $(LIBDIR)/librcounter.a
 PKG_LIBS = -L$(LIBDIR) -lrcounter -lws2_32 -ladvapi32 -luserenv -lbcrypt -lntdll
 
@@ -27,13 +27,13 @@ $(STATLIB):
 	# Build the project using Cargo with additional flags
 	export CARGO_HOME=$(CARGOTMP) && \
 	export LIBRARY_PATH="$(LIBRARY_PATH);$(CURDIR)/$(TARGET_DIR)/libgcc_mock" && \
-	RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" cargo build @CRAN_FLAGS@ --target=$(TARGET) --lib @PROFILE@ --manifest-path=rcounter/Cargo.toml --target-dir=$(TARGET_DIR)
+	RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" cargo build -j 2 --offline --target=$(TARGET) --lib --release --manifest-path=rcounter/Cargo.toml --target-dir=$(TARGET_DIR)
 
 	# Always clean up CARGOTMP
 	rm -Rf $(CARGOTMP);
 
 rust_clean: $(SHLIB)
-	rm -Rf $(CARGOTMP) $(VENDOR_DIR) @CLEAN_TARGET@
+	rm -Rf $(CARGOTMP) $(VENDOR_DIR) $(TARGET_DIR)
 
 clean:
 	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS) $(TARGET_DIR) $(VENDOR_DIR)

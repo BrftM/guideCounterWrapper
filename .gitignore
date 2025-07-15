@@ -1,7 +1,12 @@
 .Rproj.user
-src/rust/vendor
-src/Makevars
-src/Makevars.win
-
-# Source packages should not contain undeclared executable files.
-*.dll
+.Rhistory
+.RData
+src/*.o
+src/*.so
+src/*.dll
+src/*.a
+src/rcounter/target/*
+src/rcounter/vendor.tar.xz
+src/rcounter/vendor/*
+inst/AUTHORS
+*.gz

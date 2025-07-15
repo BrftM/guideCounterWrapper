@@ -1,7 +1,10 @@
-^guideCounterWrapper\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
-^src/\.cargo$
-^src/rust/vendor$
-^src/rust/target$
-^src/Makevars$
-^src/Makevars\.win$
+^src/rcounter/target
+^src/rcounter/vendor/
+\.lock$
+\.rs\.bk$
+^README.md$
+^.travis.yml$
+^appveyor.yml$
+^\.github$
