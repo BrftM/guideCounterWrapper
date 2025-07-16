@@ -1,5 +1,1 @@
-#!/bin/sh
-
-echo "[INFO] Running cleanup.win"
-rm -f src/Makevars src/Makevars.win
-rm -rf src/.cargo rcounter/target
+cleanup
