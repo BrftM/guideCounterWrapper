@@ -14,7 +14,7 @@ inst/AUTHORS
 *.rds
 
 # Ignore Rcheck directory
-.Rcheck/
+*.Rcheck/
 
 # Ignore Git directory
 .git/
