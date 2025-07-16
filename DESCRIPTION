@@ -13,6 +13,8 @@ Description: Provides an R wrapper around the command-line tool 'guide-counter',
     for CRISPR screening experiments. If you use 'guide-counter' or this wrapper in your work,
     please cite the original tool as: Fennell and Homer (2022) <doi:10.5281/zenodo.6375792>.
 License: MIT + file LICENSE
+URL: https://github.com/BrftM/guideCounterWrapper
+BugReports: https://github.com/BrftM/guideCounterWrapper/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
