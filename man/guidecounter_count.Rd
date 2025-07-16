@@ -2,7 +2,7 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{guidecounter_count}
 \alias{guidecounter_count}
-\title{Call the \verb{guide-counter count} CLI from R.}
+\title{Call the \verb{guide-counter count} CLI from R}
 \usage{
 guidecounter_count(input, library, offset_min_fraction, output)
 }

@@ -1,13 +1,13 @@
 use extendr_api::prelude::*;
 use std::process::{Command};
 
-/// Exposes the guide-counter functionality as a Rust function that can be called from R.
-///
+/// Exposes the guidecounter_count functionality as a Rust function callable from R.
+/// 
 /// @param input A character vector of input file paths.
 /// @param library A string specifying the library name or path to use.
-/// @param offset_min_fraction A numeric value (fraction) specifying the minimum offset threshold.
+/// @param offset_min_fraction A numeric value specifying the minimum offset threshold.
 /// @param output A string specifying the output file path.
-/// @return A character string indicating success or the error message.
+/// @return A character string indicating success or error message.
 /// @export
 #[extendr]
 fn guidecounter_count(
