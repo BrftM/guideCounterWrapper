@@ -1,10 +1,7 @@
 TARGET_DIR = ./rcounter/target
 LIBDIR = $(TARGET_DIR)/$(TARGET)/@LIBDIR@
 STATLIB = $(LIBDIR)/librcounter.a
-
-ifeq ($(OS),Windows_NT)
-    PKG_LIBS = -L$(LIBDIR) -lrcounter -lws2_32 -ladvapi32 -luserenv -lbcrypt -lntdll
-endif
+PKG_LIBS = -L$(LIBDIR) -lrcounter -lws2_32 -ladvapi32 -luserenv -lbcrypt -lntdll
 
 all: $(SHLIB) rust_clean
 
