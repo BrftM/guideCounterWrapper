@@ -3,5 +3,3 @@
 *.dll
 target
 .cargo
-Cargo.lock
-**/*.rs.bk

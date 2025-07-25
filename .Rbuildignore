@@ -21,3 +21,11 @@
 ^\.Rproj\.user$
 src/vendor/*
 ^src/rcounter/vendor$
+
+
+^cran-comments\.md$
+^CRAN-SUBMISSION$
+^src/rcounter/vendor$
+^src/rcounter/target$
+^src/Makevars$
+^src/Makevars\.win$

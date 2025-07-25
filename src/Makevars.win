@@ -1,47 +1,37 @@
-# Define the target and library directories
 TARGET = $(subst 64,x86_64,$(subst 32,i686,$(WIN)))-pc-windows-gnu
+
 TARGET_DIR = ./rcounter/target
 LIBDIR = $(TARGET_DIR)/$(TARGET)/release
 STATLIB = $(LIBDIR)/librcounter.a
 PKG_LIBS = -L$(LIBDIR) -lrcounter -lws2_32 -ladvapi32 -luserenv -lbcrypt -lntdll
 
-# Default target (build the shared library and clean)
 all: $(SHLIB) rust_clean
 
-# Mark the STATLIB target as phony
 .PHONY: $(STATLIB)
 
-# Build the shared library by depending on the statically linked library
 $(SHLIB): $(STATLIB)
 
-# Define temporary cargo location
 CARGOTMP = $(CURDIR)/.cargo
 VENDOR_DIR = vendor
 
-# Ensure the statically linked library is built
 $(STATLIB):
 	mkdir -p $(TARGET_DIR)/libgcc_mock
 	touch $(TARGET_DIR)/libgcc_mock/libgcc_eh.a
 
-	# Check if vendor.tar.xz exists and extract it if found
 	if [ -f ./rcounter/vendor.tar.xz ]; then \
 		tar xf rcounter/vendor.tar.xz && \
 		mkdir -p $(CARGOTMP) && \
 		cp rcounter/vendor-config.toml $(CARGOTMP)/config.toml; \
 	fi
 
-	# Build the project using Cargo with the offline flag to use vendored crates
 	export CARGO_HOME=$(CARGOTMP) && \
 	export LIBRARY_PATH="$(LIBRARY_PATH);$(CURDIR)/$(TARGET_DIR)/libgcc_mock" && \
 	RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" cargo build -j 2 --offline --target=$(TARGET) --lib --release --manifest-path=rcounter/Cargo.toml --target-dir=$(TARGET_DIR)
 
-	# Clean up the cargo temp directory after the build
 	rm -Rf $(CARGOTMP)
 
-# Rust clean-up target
 rust_clean: $(SHLIB)
 	rm -Rf $(CARGOTMP) $(VENDOR_DIR) $(TARGET_DIR)
 
-# General clean target to remove build artifacts
 clean:
 	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS) $(TARGET_DIR) $(VENDOR_DIR)

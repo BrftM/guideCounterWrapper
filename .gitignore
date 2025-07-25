@@ -3,9 +3,9 @@ src/*.so
 src/*.dll
 src/*.a
 src/rcounter/target/*
-src/rcounter/vendor.tar.xz
-src/rcounter/vendor/*
+
 inst/AUTHORS
+*.tar.gz
 *.gz
 *.rds
 
@@ -18,5 +18,15 @@ inst/AUTHORS
 # Ignore R-related files that should not be in a package tarball
 .Rhistory
 .RData
-.Rproj.user
 .Rhistory
+
+.Rproj.user
+inst/doc
+docs
+revdep/
+src/vendor
+src/rcounter/vendor
+src/Makevars
+src/Makevars.win
+*.tar.gz
+*.Rcheck
