@@ -1,5 +1,5 @@
 TARGET_DIR = ./rcounter/target
-LIBDIR = $(TARGET_DIR)/release
+LIBDIR = $(TARGET_DIR)/@LIBDIR@
 STATLIB = $(LIBDIR)/librcounter.a
 PKG_LIBS = -L$(LIBDIR) -lrcounter
 
@@ -12,22 +12,35 @@ $(SHLIB): $(STATLIB)
 CARGOTMP = $(CURDIR)/.cargo
 VENDOR_DIR = $(CURDIR)/vendor
 
+
+# RUSTFLAGS appends --print=native-static-libs to ensure that 
+# the correct linkers are used. Use this for debugging if need. 
+#
+# CRAN note: Cargo and Rustc versions are reported during
+# configure via tools/msrv.R.
+#
+# When the NOT_CRAN flag is *not* set, the vendor.tar.xz, if present,
+# is unzipped and used for offline compilation.
 $(STATLIB):
-	if [ -f ./rcounter/vendor.tar.xz ]; then \
-		tar xf rcounter/vendor.tar.xz && \
-		mkdir -p $(CARGOTMP) && \
-		cp rcounter/vendor-config.toml $(CARGOTMP)/config.toml; \
+
+	# Check if NOT_CRAN is false and unzip vendor.tar.xz if so
+	if [ "$(NOT_CRAN)" != "true" ]; then \
+		if [ -f ./rcounter/vendor.tar.xz ]; then \
+			tar xf rcounter/vendor.tar.xz && \
+			mkdir -p $(CARGOTMP) && \
+			cp rcounter/vendor-config.toml $(CARGOTMP)/config.toml; \
+		fi; \
 	fi
 
-	CARGO_HOME=$(CARGOTMP) \
-	PATH="$(PATH):$(HOME)/.cargo/bin" \
-	RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" \
-	cargo build --release --offline --lib --manifest-path=./rcounter/Cargo.toml --target-dir $(TARGET_DIR)
+	export CARGO_HOME=$(CARGOTMP) && \
+	export PATH="$(PATH):$(HOME)/.cargo/bin" && \
+	RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" cargo build @CRAN_FLAGS@ --lib @PROFILE@ --manifest-path=./rcounter/Cargo.toml --target-dir $(TARGET_DIR)
 
-	rm -Rf $(CARGOTMP)
+	# Always clean up CARGOTMP
+	rm -Rf $(CARGOTMP);
 
-rust_clean:
-	rm -Rf $(CARGOTMP) $(VENDOR_DIR)
+rust_clean: $(SHLIB)
+	rm -Rf $(CARGOTMP) $(VENDOR_DIR) @CLEAN_TARGET@
 
 clean:
-	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS) $(TARGET_DIR) $(VENDOR_DIR)
+	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS) $(TARGET_DIR)
