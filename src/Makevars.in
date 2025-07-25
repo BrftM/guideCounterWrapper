@@ -1,7 +1,7 @@
 TARGET_DIR = ./rcounter/target
-LIBDIR = $(TARGET_DIR)/$(TARGET)/@LIBDIR@
+LIBDIR = $(TARGET_DIR)/release
 STATLIB = $(LIBDIR)/librcounter.a
-PKG_LIBS = -L$(LIBDIR) -lrcounter -lws2_32 -ladvapi32 -luserenv -lbcrypt -lntdll
+PKG_LIBS = -L$(LIBDIR) -lrcounter
 
 all: $(SHLIB) rust_clean
 
@@ -13,23 +13,21 @@ CARGOTMP = $(CURDIR)/.cargo
 VENDOR_DIR = $(CURDIR)/vendor
 
 $(STATLIB):
-	
 	if [ -f ./rcounter/vendor.tar.xz ]; then \
 		tar xf rcounter/vendor.tar.xz && \
 		mkdir -p $(CARGOTMP) && \
 		cp rcounter/vendor-config.toml $(CARGOTMP)/config.toml; \
 	fi
 
-	export CARGO_HOME=$(CARGOTMP) && \
-	export PATH="$(PATH):$(HOME)/.cargo/bin" && \
-	export LIBRARY_PATH="$(LIBRARY_PATH);$(CURDIR)/$(TARGET_DIR)/libgcc_mock" && \
-	RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" cargo build @CRAN_FLAGS@ --lib @PROFILE@ --manifest-path=./rcounter/Cargo.toml --target-dir $(TARGET_DIR) @TARGET@
+	CARGO_HOME=$(CARGOTMP) \
+	PATH="$(PATH):$(HOME)/.cargo/bin" \
+	RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" \
+	cargo build --release --offline --lib --manifest-path=./rcounter/Cargo.toml --target-dir $(TARGET_DIR)
 
-	# Always clean up CARGOTMP
-	rm -Rf $(CARGOTMP);
+	rm -Rf $(CARGOTMP)
 
-rust_clean: $(SHLIB)
-	rm -Rf $(CARGOTMP) $(VENDOR_DIR) @CLEAN_TARGET@
+rust_clean:
+	rm -Rf $(CARGOTMP) $(VENDOR_DIR)
 
 clean:
 	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS) $(TARGET_DIR) $(VENDOR_DIR)
