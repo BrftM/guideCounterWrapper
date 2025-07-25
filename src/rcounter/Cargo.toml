@@ -13,3 +13,6 @@ path = "src/lib.rs"
 [dependencies]
 extendr-api = "0.8.1"             
 guide-counter = "0.1.3"           
+
+[profile.release]
+panic = "unwind"
