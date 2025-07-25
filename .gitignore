@@ -30,3 +30,4 @@ src/Makevars
 src/Makevars.win
 *.tar.gz
 *.Rcheck
+rcounter/target/
