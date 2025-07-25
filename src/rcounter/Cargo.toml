@@ -11,6 +11,6 @@ crate-type = ["staticlib"]
 path = "src/lib.rs"
 
 [dependencies]
-extendr-api = "0.7.0"    # Downgraded from 8.0.1         
+extendr-api = { version = "0.8.0", features = ["result_condition"] }  
 guide-counter = "0.1.3" 
 
