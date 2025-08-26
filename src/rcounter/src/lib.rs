@@ -1,6 +1,8 @@
 use extendr_api::prelude::*;
 use std::io::{BufRead, BufReader};
 use std::process::{Command, Stdio};
+use std::thread;
+
 
 /// Exposes the guidecounter_count functionality as a Rust function callable from R.
 /// 
@@ -32,41 +34,47 @@ fn guidecounter_count(
     command.stdout(Stdio::piped());
     command.stderr(Stdio::piped());
 
-    let mut child = command
-        .spawn()
-        .map_err(|e| Error::from(format!("Failed to execute 'guide-counter': {e}")))?;
+    let mut child = command.spawn()
+    .map_err(|e| Error::from(format!("Failed to execute 'guide-counter': {e}")))?;
 
-    // Stream stdout
-    if let Some(stdout) = child.stdout.take() {
-        let reader = BufReader::new(stdout);
-        for line in reader.lines() {
-            if let Ok(l) = line {
-                rprintln!("{}", l); // print to R console
+    // stdout thread
+    let stdout = child.stdout.take();
+    let stdout_handle = thread::spawn(move || {
+        if let Some(out) = stdout {
+            let reader = BufReader::new(out);
+            for line in reader.lines() {
+                if let Ok(l) = line {
+                    rprintln!("{}", l);
+                }
             }
         }
-    }
+    });
 
-    // Stream stderr
-    if let Some(stderr) = child.stderr.take() {
-        let reader = BufReader::new(stderr);
-        for line in reader.lines() {
-            if let Ok(l) = line {
-                rprintln!("stderr: {}", l);
+    // stderr thread
+    let stderr = child.stderr.take();
+    let stderr_handle = thread::spawn(move || {
+        if let Some(err) = stderr {
+            let reader = BufReader::new(err);
+            for line in reader.lines() {
+                if let Ok(l) = line {
+                    rprintln!("stderr: {}", l);
+                }
             }
         }
-    }
+    });
 
-    let status = child
-        .wait()
+    // wait for process
+    let status = child.wait()
         .map_err(|e| Error::from(format!("Failed to wait for 'guide-counter': {e}")))?;
+
+    // wait for log threads to finish
+    let _ = stdout_handle.join();
+    let _ = stderr_handle.join();
 
     if status.success() {
         Ok("guide-counter completed successfully.".to_string())
     } else {
-        Err(Error::from(format!(
-            "guide-counter failed with exit code {:?}",
-            status.code()
-        )))
+        Err(Error::from(format!("guide-counter failed: {:?}", status.code())))
     }
 }
 
