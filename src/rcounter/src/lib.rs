@@ -1,5 +1,6 @@
 use extendr_api::prelude::*;
-use std::process::{Command};
+use std::io::{BufRead, BufReader};
+use std::process::{Command, Stdio};
 
 /// Exposes the guidecounter_count functionality as a Rust function callable from R.
 /// 
@@ -15,7 +16,7 @@ fn guidecounter_count(
     library: String,                  
     offset_min_fraction: f64,          
     output: String                     
-) -> RobjResult<String> {
+) -> Result<String> {
     let mut command = Command::new("guide-counter");
     command.arg("count");
 
@@ -27,20 +28,45 @@ fn guidecounter_count(
             .arg("--library").arg(library)
             .arg("--output").arg(output);
 
-    match command.output() {
-        Ok(out) => {
-            if output.status.success() {
-                "Demux operation completed successfully.".to_string()
-            } else {
-                let code = out.status.code().unwrap_or(-1);
-                let err_msg = String::from_utf8_lossy(&out.stderr).to_string();
-                Err(Error::from(format!(
-                    "Demux failed (exit code {}): {}",
-                    code, err_msg
-                )))
+    // Enable streaming of stdout/stderr
+    command.stdout(Stdio::piped());
+    command.stderr(Stdio::piped());
+
+    let mut child = command
+        .spawn()
+        .map_err(|e| Error::from(format!("Failed to execute 'guide-counter': {e}")))?;
+
+    // Stream stdout
+    if let Some(stdout) = child.stdout.take() {
+        let reader = BufReader::new(stdout);
+        for line in reader.lines() {
+            if let Ok(l) = line {
+                rprintln!("{}", l); // print to R console
             }
         }
-        Err(e) => Err(Error::from(format!("Failed to execute command: {e}"))),
+    }
+
+    // Stream stderr
+    if let Some(stderr) = child.stderr.take() {
+        let reader = BufReader::new(stderr);
+        for line in reader.lines() {
+            if let Ok(l) = line {
+                rprintln!("stderr: {}", l);
+            }
+        }
+    }
+
+    let status = child
+        .wait()
+        .map_err(|e| Error::from(format!("Failed to wait for 'guide-counter': {e}")))?;
+
+    if status.success() {
+        Ok("guide-counter completed successfully.".to_string())
+    } else {
+        Err(Error::from(format!(
+            "guide-counter failed with exit code {:?}",
+            status.code()
+        )))
     }
 }
 
