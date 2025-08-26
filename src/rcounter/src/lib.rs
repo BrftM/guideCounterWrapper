@@ -28,12 +28,16 @@ fn guidecounter_count(
             .arg("--output").arg(output);
 
     match command.output() {
-        Ok(output) => {
+        Ok(out) => {
             if output.status.success() {
                 "Demux operation completed successfully.".to_string()
             } else {
-                let err_msg = String::from_utf8_lossy(&output.stderr);
-                format!("Demux failed: {}", err_msg)
+                let code = out.status.code().unwrap_or(-1);
+                let err_msg = String::from_utf8_lossy(&out.stderr).to_string();
+                Err(Error::from(format!(
+                    "Demux failed (exit code {}): {}",
+                    code, err_msg
+                )))
             }
         }
         Err(e) => format!("Failed to execute command: {}", e),
