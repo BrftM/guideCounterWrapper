@@ -15,7 +15,7 @@ fn guidecounter_count(
     library: String,                  
     offset_min_fraction: f64,          
     output: String                     
-) -> String {
+) -> RobjResult<String> {
     let mut command = Command::new("guide-counter");
     command.arg("count");
 
@@ -40,7 +40,7 @@ fn guidecounter_count(
                 )))
             }
         }
-        Err(e) => format!("Failed to execute command: {}", e),
+        Err(e) => Err(Error::from(format!("Failed to execute command: {e}"))),
     }
 }
 
