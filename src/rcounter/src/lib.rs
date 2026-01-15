@@ -1,7 +1,7 @@
 use extendr_api::prelude::*;
 use std::process::{Command, Stdio};
 
-/// Exposes the guidecounter_count functionality as a Rust function callable from R.
+/// Exposes the guidecounter_count_internal functionality as a Rust function callable from R.
 /// 
 /// @param input A character vector of input file paths.
 /// @param library A string specifying the library name or path to use.
@@ -10,13 +10,13 @@ use std::process::{Command, Stdio};
 /// @return A character string indicating success or error message.
 /// @export
 #[extendr]
-fn guidecounter_count(
+fn guidecounter_count_internal(
     input: Vec<String>,
     library: String,
     offset_min_fraction: f64,
     output: String,
     exact_match: bool
-) -> String {
+) -> i32 {
     let mut command = Command::new("guide-counter");
     command.arg("count");
 
@@ -35,18 +35,12 @@ fn guidecounter_count(
     command.stdout(Stdio::inherit()).stderr(Stdio::inherit());
 
     match command.status() {
-        Ok(status) => {
-            if status.success() {
-                "Demux operation completed successfully.".to_string()
-            } else {
-                format!("Demux failed with status: {}", status)
-            }
-        }
-        Err(e) => format!("Failed to execute command: {}", e),
+        Ok(status) => status.code().unwrap_or(1),
+        Err(_e) => 1,
     }
 }
 
 extendr_module! {
     mod guideCounterWrapper;
-    fn guidecounter_count;
+    fn guidecounter_count_internal;
 }

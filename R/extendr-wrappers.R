@@ -10,7 +10,7 @@
 #' @useDynLib guideCounterWrapper, .registration = TRUE
 NULL
 
-#' Exposes the guidecounter_count functionality as a Rust function callable from R.
+#' Exposes the guidecounter_count_internal functionality as a Rust function callable from R.
 #' 
 #' @param input A character vector of input file paths.
 #' @param library A string specifying the library name or path to use.
@@ -18,7 +18,7 @@ NULL
 #' @param output A string specifying the output file path.
 #' @return A character string indicating success or error message.
 #' @export
-guidecounter_count <- function(input, library, offset_min_fraction, output, exact_match) .Call(wrap__guidecounter_count, input, library, offset_min_fraction, output, exact_match)
+guidecounter_count_internal <- function(input, library, offset_min_fraction, output, exact_match) .Call(wrap__guidecounter_count_internal, input, library, offset_min_fraction, output, exact_match)
 
 
 # nolint end
