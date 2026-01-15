@@ -17,7 +17,6 @@ NULL
 #' @param offset_min_fraction A numeric value specifying the minimum offset threshold.
 #' @param output A string specifying the output file path.
 #' @return A character string indicating success or error message.
-#' @export
 guidecounter_count_internal <- function(input, library, offset_min_fraction, output, exact_match) .Call(wrap__guidecounter_count_internal, input, library, offset_min_fraction, output, exact_match)
 
 
