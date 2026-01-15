@@ -21,12 +21,12 @@ fn guidecounter_count_internal(
     command.arg("count");
 
     for input_path in input {
-                command.arg("--input").arg(input_path);
+        command.arg("--input").arg(input_path);
     }
 
     command.arg("--offset-min-fraction").arg(offset_min_fraction.to_string())
-            .arg("--library").arg(library)
-            .arg("--output").arg(output);
+        .arg("--library").arg(library)
+        .arg("--output").arg(output);
 
     if exact_match {
         command.arg("--exact-match");
