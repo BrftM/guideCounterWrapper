@@ -16,8 +16,9 @@ NULL
 #' @param library A string specifying the library name or path to use.
 #' @param offset_min_fraction A numeric value specifying the minimum offset threshold.
 #' @param output A string specifying the output file path.
+#' @param verbose Logical; emit progress messages from guide-counter.
 #' @return A character string indicating success or error message.
-guidecounter_count_internal <- function(input, library, offset_min_fraction, output, exact_match) .Call(wrap__guidecounter_count_internal, input, library, offset_min_fraction, output, exact_match)
+guidecounter_count_internal <- function(input, library, offset_min_fraction, output, exact_match, verbose) .Call(wrap__guidecounter_count_internal, input, library, offset_min_fraction, output, exact_match, verbose)
 
 
 # nolint end

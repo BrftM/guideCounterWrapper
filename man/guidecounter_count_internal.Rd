@@ -9,7 +9,8 @@ guidecounter_count_internal(
   library,
   offset_min_fraction,
   output,
-  exact_match
+  exact_match,
+  verbose
 )
 }
 \arguments{
@@ -20,6 +21,8 @@ guidecounter_count_internal(
 \item{offset_min_fraction}{A numeric value specifying the minimum offset threshold.}
 
 \item{output}{A string specifying the output file path.}
+
+\item{verbose}{Logical; emit progress messages from guide-counter.}
 }
 \value{
 A character string indicating success or error message.

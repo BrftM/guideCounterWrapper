@@ -27,6 +27,7 @@ fn emit_message(line: &str) {
 /// @param library A string specifying the library name or path to use.
 /// @param offset_min_fraction A numeric value specifying the minimum offset threshold.
 /// @param output A string specifying the output file path.
+/// @param verbose Logical; emit progress messages from guide-counter.
 /// @return A character string indicating success or error message.
 #[extendr]
 fn guidecounter_count_internal(
@@ -34,7 +35,8 @@ fn guidecounter_count_internal(
     library: String,
     offset_min_fraction: f64,
     output: String,
-    exact_match: bool
+    exact_match: bool,
+    verbose: bool,
 ) -> i32 {
     let mut command = Command::new("guide-counter");
     command.arg("count");
@@ -66,7 +68,9 @@ fn guidecounter_count_internal(
     drop(tx);
 
     while let Ok(line) = rx.recv() {
-        emit_message(&line.text);
+        if verbose {
+            emit_message(&line.text);
+        }
     }
 
     match child.wait() {
