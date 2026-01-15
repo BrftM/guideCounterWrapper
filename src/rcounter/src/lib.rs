@@ -1,5 +1,5 @@
 use extendr_api::prelude::*;
-use std::process::{Command};
+use std::process::{Command, Stdio};
 
 /// Exposes the guidecounter_count functionality as a Rust function callable from R.
 /// 
@@ -32,13 +32,14 @@ fn guidecounter_count(
         command.arg("--exact-match");
     }
 
-    match command.output() {
-        Ok(output) => {
-            if output.status.success() {
+    command.stdout(Stdio::inherit()).stderr(Stdio::inherit());
+
+    match command.status() {
+        Ok(status) => {
+            if status.success() {
                 "Demux operation completed successfully.".to_string()
             } else {
-                let err_msg = String::from_utf8_lossy(&output.stderr);
-                format!("Demux failed: {}", err_msg)
+                format!("Demux failed with status: {}", status)
             }
         }
         Err(e) => format!("Failed to execute command: {}", e),
