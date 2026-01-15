@@ -4,7 +4,14 @@
 \alias{guidecounter_count}
 \title{Run guide-counter count via the internal Rust wrapper}
 \usage{
-guidecounter_count(input, library, offset_min_fraction, output, exact_match)
+guidecounter_count(
+  input,
+  library,
+  offset_min_fraction,
+  output,
+  exact_match,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{input}{A character vector of input file paths.}
@@ -14,6 +21,8 @@ guidecounter_count(input, library, offset_min_fraction, output, exact_match)
 \item{offset_min_fraction}{A numeric value specifying the minimum offset threshold.}
 
 \item{output}{A string specifying the output file path.}
+
+\item{verbose}{Logical; emit progress messages from guide-counter.}
 }
 \description{
 Run guide-counter count via the internal Rust wrapper
